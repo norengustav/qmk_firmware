@@ -67,9 +67,11 @@ enum sofle_layers {
     _DEFAULTS = 0,
     _QWERTY = 0,
     _COLEMAK,
-	  _COLEMAKDH,
-    _LOWER,
-    _RAISE,
+	_COLEMAKDH,
+    _SYM,
+    _FUN,
+    _NAV,
+    _MOUSE,
     _ADJUST,
     _NUMPAD,
     _SWITCH
@@ -78,9 +80,11 @@ enum sofle_layers {
 enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_COLEMAK,
-	  KC_COLEMAKDH,
-    KC_LOWER,
-    KC_RAISE,
+	KC_COLEMAKDH,
+    KC_SYM,
+    KC_FUN,
+    KC_NAV,
+    KC_MOUSE,
     KC_ADJUST,
     KC_D_MUTE
 };
@@ -103,15 +107,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_QWERTY] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             LT(_SWITCH,KC_6), KC_7,   KC_8,    KC_9,    KC_0,    KC_GRV,
+  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,   KC_8,    KC_9,    KC_0,    KC_ESC,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  LT(_NUMPAD,KC_TAB),KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
+  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_NO,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_LSFT,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  KC_LCTL,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
+  KC_LCTL,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                 KC_BSPC, KC_LGUI, KC_LOWER, KC_SPC,  KC_ENT   ,     KC_SPC, KC_ENT ,  KC_RAISE, KC_RCTL, KC_RALT
+                 KC_LGUI, KC_LALT, KC_NAV,  KC_MOUSE, KC_SPC   ,  KC_ENT,  KC_BSPC,  KC_SYM,  KC_FUN,   KC_RALT
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
@@ -187,17 +191,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
-[_LOWER] = LAYOUT(
+[_SYM] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  _______,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                  KC_CIRC, KC_AMPR, KC_NO,   KC_NO,  KC_NO,   KC_NO,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   KC_BSPC,
+  KC_GRV,  KC_COMM, KC_LT,   KC_GT,   KC_DQT,  KC_QUOT,                  KC_PIPE, KC_LBRC, KC_RBRC, KC_NO,  KC_NO,   RALT(KC_W),
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  _______,  KC_NO,  KC_NO,   KC_NO,   KC_WH_U, KC_PGUP,                   KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, KC_NO,   KC_DEL,
+  KC_NO,   KC_DOT,  KC_MINS, KC_PLUS, KC_EQL,  KC_UNDS,                  KC_SCLN, KC_LPRN, KC_RPRN, KC_NO, RALT(KC_Q), RALT(KC_P),
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  _______,  KC_NO,  KC_NO,   KC_NO,   KC_WH_D, KC_PGDN,_______,    _______,KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_NO,    _______,
+  KC_NO,   KC_NO,   KC_SLSH, KC_ASTR, KC_BSLS, KC_NO, _______,   _______,KC_COLN, KC_LCBR, KC_RCBR, KC_NO,  KC_QUES, KC_RSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                 _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
+                 KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_NO,       KC_NO,  KC_NO,    _______, KC_NO,    KC_NO
+  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
+),
+[_FUN] = LAYOUT(
+  //,------------------------------------------------.                    ,---------------------------------------------------.
+  KC_ESC,  KC_NO,  KC_NO,   KC_NO,   KC_NO,  KC_NO,                      KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_ESC,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+  KC_NO,   KC_F12, KC_F7,   KC_F8,   KC_F9,  KC_PSCR,                    KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+  KC_NO,   KC_F11, KC_F4,   KC_F5,   KC_F6,  KC_SCRL,                    KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+  KC_NO,   KC_F10, KC_F1,   KC_F2,   KC_F3,  KC_PAUS, _______,   _______,KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+                 KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_NO,       KC_NO,  KC_NO,    KC_NO,   _______,  KC_NO
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 /* RAISE
@@ -214,17 +231,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
-[_RAISE] = LAYOUT(
+[_NAV] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  _______, _______ , _______ , _______ , _______ , _______,               _______,  _______  , _______,  _______ ,  _______ ,_______,
+  KC_ESC,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_ESC,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  _______,  KC_INS,  KC_PSCR,   KC_APP,  XXXXXXX, XXXXXXX,                KC_CIRC, KC_AMPR,KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
+  KC_NO,    KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_AGIN, KC_PSTE,KC_COPY, KC_CUT,  KC_UNDO, KC_NO,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  _______, KC_LALT,  KC_LCTL,  KC_LSFT,  XXXXXXX, KC_CAPS,                KC_MINS, KC_EQL, KC_LCBR, KC_RCBR, KC_PIPE, KC_GRV,
+  KC_LSFT,  KC_LGUI,KC_LALT, KC_LCTL, KC_LSFT, KC_ESC,                    KC_CAPS, KC_LEFT,KC_DOWN, KC_UP,   KC_RGHT, KC_NO,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  _______,KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,_______,    _______,KC_UNDS, KC_PLUS,KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,
+  KC_LCTL,  KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,_______,     _______,KC_INS,  KC_HOME,KC_PGDN, KC_PGUP, KC_END,  KC_NO,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                 _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
+                 KC_LGUI, KC_LALT, _______, KC_NO,    KC_NO,      KC_ENT,  KC_BSPC,  KC_DEL,  KC_NO,    KC_NO
+  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
+),
+[_MOUSE] = LAYOUT(
+  //,------------------------------------------------.                    ,---------------------------------------------------.
+  KC_NO,    KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+  KC_NO,    KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                     KC_AGIN, KC_PSTE,KC_COPY, KC_CUT,  KC_UNDO, KC_NO,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+  KC_LSFT,  KC_LGUI,KC_LALT, KC_LCTL, KC_LSFT, KC_NO,                     KC_CAPS, KC_LEFT,KC_DOWN, KC_UP,   KC_RGHT, KC_NO,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+  KC_LCTL,  KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,_______,     _______,KC_INS,  KC_HOME,KC_PGDN, KC_PGUP, KC_END,  KC_NO,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+                 KC_LGUI, KC_LALT, KC_NO,   _______, KC_NO,      KC_ENT,  KC_BSPC,  KC_DEL,  KC_NO,    KC_NO
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 /* ADJUST
@@ -438,14 +468,17 @@ static void print_status_narrow(void) {
         case _COLEMAKDH:
             oled_write_P(PSTR("Base\n"), false);
             break;
-        case _RAISE:
-            oled_write_P(PSTR("Raise"), false);
+        case _SYM:
+            oled_write_P(PSTR("Sym\n"), false);
             break;
-        case _LOWER:
-            oled_write_P(PSTR("Lower"), false);
+        case _FUN:
+            oled_write_P(PSTR("Fun\n"), false);
             break;
-        case _ADJUST:
-            oled_write_P(PSTR("Adj\n"), false);
+        case _NAV:
+            oled_write_P(PSTR("Nav\n"), false);
+            break;
+        case _MOUSE:
+            oled_write_P(PSTR("Mouse\n"), false);
             break;
         case _NUMPAD:
             oled_write_P(PSTR("Nump\n"), false);
@@ -493,29 +526,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_single_persistent_default_layer(_COLEMAKDH);
             }
             return false;
-        case KC_LOWER:
+        case KC_SYM:
             if (record->event.pressed) {
-                layer_on(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                layer_on(_SYM);
             } else {
-                layer_off(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                layer_off(_SYM);
             }
             return false;
-        case KC_RAISE:
+        case KC_FUN:
             if (record->event.pressed) {
-                layer_on(_RAISE);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                layer_on(_FUN);
             } else {
-                layer_off(_RAISE);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                layer_off(_FUN);
             }
             return false;
-        case KC_ADJUST:
+        case KC_NAV:
             if (record->event.pressed) {
-                layer_on(_ADJUST);
+                layer_on(_NAV);
             } else {
-                layer_off(_ADJUST);
+                layer_off(_NAV);
+            }
+            return false;
+        case KC_MOUSE:
+            if (record->event.pressed) {
+                layer_on(_MOUSE);
+            } else {
+                layer_off(_MOUSE);
             }
             return false;
         case KC_D_MUTE:
@@ -550,14 +586,14 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 						tap_code(KC_PGUP);
 					}
 				break;
-			case _RAISE:
-			case _LOWER:
-					if (clockwise) {
-						tap_code(KC_DOWN);
-					} else {
-						tap_code(KC_UP);
-					}
-				break;
+			//case _RAISE:
+			//case _LOWER:
+			//		if (clockwise) {
+			//			tap_code(KC_DOWN);
+			//		} else {
+			//			tap_code(KC_UP);
+			//		}
+			//	break;
 			default:
 					if (clockwise) {
 						tap_code(KC_WH_D);
